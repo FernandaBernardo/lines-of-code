@@ -28,4 +28,18 @@ public class LinesOfCodeTest {
 		program.run();
 		assertEquals(3, program.getLinesOfCode());
 	}
+
+	@Test
+	public void shouldIgnoreBlockComment() {
+		Program program = new Program();
+		program.setCode("public interface Dave {\n"
+				+ "/*\n"
+				+ "*only block of comment\n"
+				+ "*/\n"
+				+ "int countLines(File inFile); \n"
+				+ "// not the real signature!\n"
+				+ "}");
+		program.run();
+		assertEquals(3, program.getLinesOfCode());
+	}
 }

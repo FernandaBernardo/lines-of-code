@@ -11,11 +11,19 @@ public class Program {
 	public void run() {
 		String[] lines = code.split("\n");
 		for (String line: lines) {
-			if(line.startsWith("//")) {
+			if(isLineOfCode(line) || isBlockOfCode(line)) {
 				continue;
 			}
 			linesOfCode++;
 		}
+	}
+
+	private boolean isBlockOfCode(String line) {
+		return line.startsWith("/*") || line.startsWith("*") || line.startsWith("*/");
+	}
+
+	private boolean isLineOfCode(String line) {
+		return line.startsWith("//");
 	}
 
 	public void setCode(String code) {
