@@ -1,46 +1,30 @@
 package main;
 
-public class Program {
-	private String code;
-	private int linesOfCode;
+import java.util.ArrayList;
+import java.util.List;
 
-	public Program() {
-		linesOfCode = 0;
+public class Program {
+	private List<Line> linesOfCode;
+
+	public Program(String code) {
+		this.linesOfCode = new ArrayList<>();
+		formatCode(code);
 	}
 
-	public void run() {
+	private void formatCode(String code) {
 		String[] lines = code.split("\n");
 		for (String line: lines) {
-			if(isLineOfCode(line) || isBlockOfCode(line) || isBlankLine(line)) {
-				continue;
-			}
-			linesOfCode++;
+			this.linesOfCode.add(new Line(line));
 		}
 	}
 
-	private boolean isBlankLine(String line) {
-		return line.isEmpty();
-	}
-
-	private boolean isBlockOfCode(String line) {
-		return (line.startsWith("/*") && (line.endsWith("*/") || !line.contains("*/")))
-				|| line.startsWith("*")
-				|| (line.endsWith("*/") && line.indexOf("*/") == line.length());
-	}
-
-	private boolean isLineOfCode(String line) {
-		return line.startsWith("//");
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
 	public int getLinesOfCode() {
-		return linesOfCode;
+		int count = 0;
+		for (Line line : linesOfCode) {
+			if(!line.isComment()) {
+				count++;
+			}
+		}
+		return count;
 	}
 }
