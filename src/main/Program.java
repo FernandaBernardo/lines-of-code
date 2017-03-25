@@ -9,7 +9,13 @@ public class Program {
 	}
 
 	public void run() {
-		this.linesOfCode = code.split("\n").length;
+		String[] lines = code.split("\n");
+		for (String line: lines) {
+			if(line.startsWith("//")) {
+				continue;
+			}
+			linesOfCode++;
+		}
 	}
 
 	public void setCode(String code) {
