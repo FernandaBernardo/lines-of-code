@@ -23,7 +23,9 @@ public class Program {
 	}
 
 	private boolean isBlockOfCode(String line) {
-		return line.startsWith("/*") || line.startsWith("*") || line.startsWith("*/");
+		return (line.startsWith("/*") && (line.endsWith("*/") || !line.contains("*/")))
+				|| line.startsWith("*")
+				|| (line.endsWith("*/") && line.indexOf("*/") == line.length());
 	}
 
 	private boolean isLineOfCode(String line) {

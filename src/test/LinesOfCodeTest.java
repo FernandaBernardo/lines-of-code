@@ -52,4 +52,14 @@ public class LinesOfCodeTest {
 		program.run();
 		assertEquals(3, program.getLinesOfCode());
 	}
+
+	@Test
+	public void shouldCountCodeAfterComment() {
+		Program program = new Program();
+		program.setCode("public interface Dave {\n"
+				+ "/* comment */int countLines(File inFile); \n"
+				+ "}");
+		program.run();
+		assertEquals(3, program.getLinesOfCode());
+	}
 }
