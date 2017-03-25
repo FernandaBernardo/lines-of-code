@@ -42,4 +42,14 @@ public class LinesOfCodeTest {
 		program.run();
 		assertEquals(3, program.getLinesOfCode());
 	}
+
+	@Test
+	public void shouldIgnoreBlankLines() {
+		Program program = new Program();
+		program.setCode("public interface Dave {\n\n"
+				+ "int countLines(File inFile); \n\n"
+				+ "}");
+		program.run();
+		assertEquals(3, program.getLinesOfCode());
+	}
 }

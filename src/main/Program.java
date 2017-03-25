@@ -11,11 +11,15 @@ public class Program {
 	public void run() {
 		String[] lines = code.split("\n");
 		for (String line: lines) {
-			if(isLineOfCode(line) || isBlockOfCode(line)) {
+			if(isLineOfCode(line) || isBlockOfCode(line) || isBlankLine(line)) {
 				continue;
 			}
 			linesOfCode++;
 		}
+	}
+
+	private boolean isBlankLine(String line) {
+		return line.isEmpty();
 	}
 
 	private boolean isBlockOfCode(String line) {
