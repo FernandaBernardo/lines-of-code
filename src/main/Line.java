@@ -22,9 +22,13 @@ public class Line {
 	}
 
 	private boolean isBlockOfCode() {
-		return (line.startsWith("/*") && (line.endsWith("*/") || !line.contains("*/")))
-				|| line.startsWith("*")
-				|| (line.endsWith("*/") && line.indexOf("*/") == line.length());
+		String endComment = "*/";
+
+		String newLine = line.replaceAll("\\/\\*[\\w|\\s]+\\*\\/", "");
+		return newLine.isEmpty()
+				|| (newLine.startsWith("/*") && !newLine.contains(endComment))
+				|| (newLine.startsWith("*") && (!newLine.contains(endComment) || newLine.lastIndexOf(endComment) == newLine.length()))
+				|| (newLine.endsWith(endComment) && newLine.lastIndexOf(endComment) == newLine.length() - endComment.length());
 	}
 
 	private boolean isLineOfCode() {

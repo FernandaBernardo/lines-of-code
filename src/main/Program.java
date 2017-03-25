@@ -12,7 +12,8 @@ public class Program {
 	}
 
 	private void formatCode(String code) {
-		String[] lines = code.split("\n");
+		String newCode = code.trim();
+		String[] lines = newCode.split("\n");
 		for (String line: lines) {
 			this.linesOfCode.add(new Line(line));
 		}

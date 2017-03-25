@@ -53,8 +53,11 @@ public class LinesOfCodeTest {
 	public void shouldCountCodeAfterComment() {
 		String code = "public interface Dave {\n"
 				+ "/* comment */int countLines(File inFile); \n"
+				+ "System./*wait*/out./*for*/println/*it*/(\"Hello/*\");\n"
+				+ "/*\n"
+				+ "* end of other comment */ int a = 0;\n"
 				+ "}";
 		Program program = new Program(code);
-		assertEquals(3, program.getLinesOfCode());
+		assertEquals(5, program.getLinesOfCode());
 	}
 }
