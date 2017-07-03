@@ -1,37 +1,30 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Line {
 	private boolean isComment;
-	private String line;
+	private List<CheckLineProgram> checks = new ArrayList<>();
 
 	public Line(String line) {
-		this.line = line;
-		verify();
+		addChecks();
+		verify(line);
+	}
+
+	private void verify(String line) {
+		for (CheckLineProgram checkLineProgram : checks) {
+			this.isComment = isComment ? true : checkLineProgram.validate(line);
+		}
 	}
 
 	public boolean isComment() {
 		return isComment;
 	}
 
-	private void verify() {
-		this.isComment = isLineOfCode() || isBlockOfCode() || isBlankLine();
-	}
-
-	private boolean isBlankLine() {
-		return line.isEmpty();
-	}
-
-	private boolean isBlockOfCode() {
-		String endComment = "*/";
-
-		String newLine = line.replaceAll("\\/\\*[\\w|\\s]+\\*\\/", "");
-		return newLine.isEmpty()
-				|| (newLine.startsWith("/*") && !newLine.contains(endComment))
-				|| (newLine.startsWith("*") && (!newLine.contains(endComment) || newLine.lastIndexOf(endComment) == newLine.length()))
-				|| (newLine.endsWith(endComment) && newLine.lastIndexOf(endComment) == newLine.length() - endComment.length());
-	}
-
-	private boolean isLineOfCode() {
-		return line.startsWith("//");
+	private void addChecks() {
+		checks.add(new LineOfCode());
+		checks.add(new BlockOfCode());
+		checks.add(new BlankLine());
 	}
 }
